@@ -1,87 +1,169 @@
 @extends('admin.layouts.app')
-@section('title', 'position')
 @section('content')
     <div class="inner-block">
-        <h2>Thống kê</h2>
-        <form class="form-inline" action="{{route('report.index')}}" method="get">
-            <div class="pull-right">
-                <div class="form-group">
-                    <p class="form-control-static">Chọn tháng</p>
-                    <select class="form-control month-select" style="width: 100px;" name="month">
-                        <option value="">Tất cả</option>
-                        @foreach(\App\Bill::month() as $key=>$month)
-                            <option value="{{$key}}">{{$month}}</option>
+        <div class="error">
+            @if (count($errors) > 0)
+                <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
                         @endforeach
-                    </select>
+                    </ul>
                 </div>
-                <div class="form-group">
-                    <p class="form-control-static">Chọn năm</p>
-                    <select class="form-control year-select" style="width: 100px;" name="year">
-                        @if(\App\Bill::TIME_END > \App\Bill::TIME_START)
-                            <option value="">Tất cả</option>
-                            @for ($i = \App\Bill::TIME_START; $i <= \App\Bill::TIME_END; $i++)
-                                <option value="{{$i}}">{{$i}}</option>
-                            @endfor
-                        @else
-                            <option>Sai thời gian, vui lòng thiết lập lái</option>
-                        @endif
-                    </select>
-                </div>
+            @endif
+        </div>
+        <div class="form_search">
+            <div class="jumbotron">
+                <form action="{{route('statistical.index')}}" method="GET" role="form" class="form-inline ">
+                    {{ csrf_field() }}
+                    <h3 class="statistical-option" style="margin-bottom: 20px;">Chọn loại thống kê
+                        <select class="form-control <?php echo $errors->has('type') ? 'input-error' : '';?>" name="type">
+                            <option value="{{\App\Http\Requests\StatisticalRequest::TYPE_YEAR}}">Năm</option>
+                            <option value="{{\App\Http\Requests\StatisticalRequest::TYPE_MONTH}}" {{isset($request['type']) ? \App\Http\Requests\StatisticalRequest::TYPE_MONTH == $request['type'] ? 'selected' : '' : ''}}>Tháng</option>
+                            <option value="{{\App\Http\Requests\StatisticalRequest::TYPE_DAY}}" {{isset($request['type']) ? \App\Http\Requests\StatisticalRequest::TYPE_DAY == $request['type'] ? 'selected' : '' : ''}}>Ngày</option>
+                            <option value="{{\App\Http\Requests\StatisticalRequest::TYPE_CHOOSE_DAY}}" {{isset($request['type']) ? \App\Http\Requests\StatisticalRequest::TYPE_CHOOSE_DAY == $request['type'] ? 'selected' : '' : ''}}>Chọn ngày</option>
+                        </select>
+                    </h3>
+                    <div class="form-group">
+                        <label for="">Loại biểu đồ</label>
+                        <select class="form-control <?php echo $errors->has('chart') ? 'input-error' : '';?>" name="chart">
+                            <option value="{{\App\Http\Requests\StatisticalRequest::TYPE_BAR}}">Cột</option>
+                            <option value="{{\App\Http\Requests\StatisticalRequest::TYPE_LINE}}" {{isset($request['chart']) ? \App\Http\Requests\StatisticalRequest::TYPE_LINE == $request['chart'] ? 'selected' : '' : ''}}>Đường</option>
+
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Chọn tháng</label>
+                        <select class="form-control <?php echo $errors->has('month') ? 'input-error' : '';?>" name="month">
+                            <option value="">Chọn tháng</option>
+                            @foreach(\App\Http\Requests\StatisticalRequest::getFilterMonths() as $key => $value)
+                                <option value="{{$key}}" {{isset($request['month']) ? $key == $request['month'] ? 'selected' : '' : ''}}>{{$value}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Chọn năm</label>
+                        <select class="form-control <?php echo $errors->has('year') ? 'input-error' : '';?>" name="year" >
+                            <option value="">Chọn năm</option>
+                            @foreach(\App\Http\Requests\StatisticalRequest::getFilterYears() as $key => $value)
+                                <option value="{{$key}}" {{isset($request['year']) ? $key == $request['year'] ? 'selected' : '' : ''}}>{{$value}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group time-start">
+                        <label>Từ</label>
+                        <input type="text" class="form-control datepicker" name="time-start"
+                               value="{{isset($request['time-start']) ? $request['time-start'] : ''}}">
+                    </div>
+                    <div class="form-group time-end">
+                        <label>Đến</label>
+                        <input type="text" class="form-control datepicker" name="time-end"
+                               value="{{isset($request['time-end']) ? $request['time-end'] : ''}}">
+                    </div>
+                    <button type="submit" class="btn btn-primary submit-statistic">Xem</button>
+                </form>
             </div>
-        </form>
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>Số lượng đã đặt</th>
-                <th>Số tour chưa thanh thanh toán</th>
-                <th>Số tiền chưa thanh toán</th>
-                <th>Số tour đã thanh toán</th>
-                <th>Số tiền đã thanh toán</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>{{$result['bill']['total']}}</td>
-                <td>{{$result['order']['total']}}</td>
-                <td>{{$result['order']['price']}}</td>
-                <td>{{$result['paid']['total']}}</td>
-                <td>{{$result['paid']['price']}}</td>
-            </tr>
-            </tbody>
-        </table>
+        </div>
+        <h1 class="text-center">Tổng doanh thu</h1>
+        <div id="myfirstchart" style="height: 250px;"></div>
+        <div class="clearfix"></div>
     </div>
     @push('scripts')
-        <script type="application/javascript">
-            $(document).ready(function(){
-                $('.year-select').change(function (e) {
-                    console.log(11);
-                    if ($('.year-select').val() != "" && $('.month-select').val() !="") {
-                        jQuery.ajax({
-                            url: "{{route('report.search')}}",
-                            data: {'year':$('.year-select').val(),'month': $('.month-select').val()},
-                        }).done(function (data) {
-                            $('.inner-block').html(data);
-                        }).fail(function () {
-                            alert('không thể tải , vui lòng thử lại');
-                        });
-                    }
+        <script>
+          $(document).ready(function () {
+            $(".datepicker").datepicker();
 
-                });
+          })
 
-                $('.month-select').change(function (e) {
-                    if ($('.year-select').val() != "" && $('.month-select').val() != "")
-                    {
-                        jQuery.ajax({
-                            url: "{{route('report.search')}}",
-                            data: {'year': $('.year-select').val(), 'month': $('.month-select').val()},
-                        }).done(function (data) {
-                            $('.inner-block').html(data);
-                        }).fail(function () {
-                            alert('không thể tải , vui lòng thử lại');
-                        });
-                    }
-                });
-            })
+          // convert json to array
+          String.prototype.replaceAll = function (search, replacement) {
+            var target = this;
+            return target.replace(new RegExp(search, 'g'), replacement);
+          };
+          var type = $('select[name=type]').val();
+          var d = '{{$data}}';
+          d = d.replaceAll("&quot;", '"');
+          if (type === "{{\App\Http\Requests\StatisticalRequest::TYPE_CHOOSE_DAY}}") {
+            d.replaceAll('"', "'");
+          }
+          var obj = jQuery.parseJSON(d);
+          console.log(obj);
+
+
+          //            chart line
+          var line = [];
+          var format_line = "{{isset($request['type']) ? $request['type'] : ''}}";
+          var type_chart = "{{isset($request['chart']) ? $request['chart'] : ''}}";
+
+          if (format_line === "{{\App\Http\Requests\StatisticalRequest::TYPE_MONTH}}") {
+            var year = "{{isset($request['year']) ? $request['year'] : ''}}";
+            $.each(obj, function (i, item) {
+              line.push({time: year+'-'+item.time.toString(), value: item.value});
+            });
+          } else if (format_line === "{{\App\Http\Requests\StatisticalRequest::TYPE_DAY}}") {
+            var year = "{{isset($request['year']) ? $request['year'] : ''}}";
+            var month = "{{isset($request['month']) ? $request['month'] : ''}}";
+            $.each(obj, function (i, item) {
+              line.push({time: year+'-'+month+'-'+ item.time.toString(), value: item.value});
+            });
+          } else {
+            $.each(obj, function (i, item) {
+              line.push({time: item.time.toString(), value: item.value});
+            });
+          }
+
+
+
+          var format = '';
+          if (format_line === "{{\App\Http\Requests\StatisticalRequest::TYPE_MONTH}}") {
+            format = "month";
+          } else if (format_line === "{{\App\Http\Requests\StatisticalRequest::TYPE_DAY}}" || format_line === "{{\App\Http\Requests\StatisticalRequest::TYPE_CHOOSE_DAY}}") {
+            format = "day";
+          } else {
+            format = "year";
+          }
+          if (type_chart == "{{\App\Http\Requests\StatisticalRequest::TYPE_LINE}}") {
+            new Morris.Line({
+              // ID of the element in which to draw the chart.
+              element: 'myfirstchart',
+              // Chart data records -- each entry in this array corresponds to a point on
+              // the chart.
+              data: line,
+              // The name of the data record attribute that contains x-values.
+              xkey: 'time',
+              // A list of names of data record attributes that contain y-values.
+              ykeys: ['value'],
+              // Labels for the ykeys -- will be displayed when you hover over the
+              // chart.
+              labels: ['Value'],
+              xLabels: format
+            });
+
+          } else {
+            new Morris.Bar({
+              // ID of the element in which to draw the chart.
+              element: 'myfirstchart',
+              // Chart data records -- each entry in this array corresponds to a point on
+              // the chart.
+              data: obj,
+              // The name of the data record attribute that contains x-values.
+              xkey: ['time'],
+              // A list of names of data record attributes that contain y-values.
+              ykeys: ['value'],
+              // Labels for the ykeys -- will be displayed when you hover over the
+              // chart.
+              labels: ['Value'],
+              resize: true,
+              grid: true,
+            });
+
+          }
+
+
         </script>
+
     @endpush
 @endsection

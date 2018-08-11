@@ -26,13 +26,13 @@
                     <td>{{$user->email}}</td>
                     <td>{{$user->updated_at}}</td>
                     <td style="position: relative;">
-                         {{--@if ($user->id != \Auth::user()->id && \Laratrust::hasRole('admin'))--}}
+                         @if ($user->id != \Auth::user()->id && \Laratrust::hasRole('admin'))
                             <form action="{{route('user.delete',['id'=>$user->id])}}" class="form-edit formConfirmDeleteCommon" method="post" style="position: absolute; top : 3px; display: inline">
                                 {{ method_field('DELETE') }}
                                 {{ csrf_field() }}
                                 <input type="submit" class="btn btn-danger submitDelete" data-toggle="modal" data-target="#myModalDelete" value="Xóa">
                             </form>
-                        {{--@endif--}}
+                        @endif
                     </td>
                 </tr>
                 <?php $i++ ?>

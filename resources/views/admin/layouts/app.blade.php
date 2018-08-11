@@ -14,6 +14,7 @@
     <link href="{{ asset('bower_components/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
     <link href="{{ asset('bower_components/select2/dist/css/select2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('bower_components/trumbowyg/dist/ui/trumbowyg.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('public/morris.js-0.5.1/morris.css') }}" rel="stylesheet">
     <link href="{{ asset('css/admin/style.css') }}" rel="stylesheet">
     <script type="application/x-javascript"> addEventListener("load", function () {
             setTimeout(hideURLbar, 0);
@@ -122,6 +123,8 @@
 <script src="{{ asset('bower_components/select2/dist/js/select2.min.js') }}"></script>
 <script src="{{ asset('bower_components/trumbowyg/dist/trumbowyg.min.js') }}"></script>
 <script src="{{ asset('js/admin/common.js') }}"></script>
+<script src="{{asset('morris.js-0.5.1/raphael-min.js')}}"></script>
+<script src="{{asset('morris.js-0.5.1/morris.min.js')}}"></script>
 <!--slide bar menu end here-->
 <script>
     var toggle = true;
