@@ -112,6 +112,7 @@
                 <li><a href="{{route('user.index')}}"><i class="fa fa-user"></i><span>{{trans('messages.user')}}</span></a></li>
                 <li><a href="{{route('product.index')}}"><i class="fa fa-book" aria-hidden="true"></i><span>{{trans('messages.product')}}</span></a></li>
                 <li><a href="{{route('order.index')}}"><i class="fa fa-first-order" aria-hidden="true"></i><span>{{trans('messages.order_list')}}</span></a></li>
+                <li><a href="{{route('statistical.index')}}"><i class="fa fa-first-order" aria-hidden="true"></i><span>{{trans('messages.statistical')}}</span></a></li>
             </ul>
         </div>
     </div>

@@ -91,6 +91,10 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['loc
         Route::get('search', 'ReportController@search')->name('report.search');
     });
 
+    Route::group(['prefix' => 'statistical'], function () {
+        Route::get('index', 'StatisticalController@index')->name('statistical.index');
+    });
+
         // order
         Route::group(['prefix' => 'order'], function () {
             Route::get('index', 'OrderController@index')->name('order.index');

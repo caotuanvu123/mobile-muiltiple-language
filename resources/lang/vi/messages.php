@@ -135,6 +135,8 @@ return [
     'product_promotion' => 'Sản phẩm khuyến mãi',
     'search' => 'Tìm kiếm',
     'search_product' => 'TÌm kiếm sản phẩm',
-    'error_paypal' => ' Đã có lỗi xảy ra trong quá trình thực hiện , vui lòng thử lại'
+    'error_paypal' => ' Đã có lỗi xảy ra trong quá trình thực hiện , vui lòng thử lại',
+
+    'statistical' => 'Thống kê'
 
 ];
