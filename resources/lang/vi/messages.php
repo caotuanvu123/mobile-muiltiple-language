@@ -137,6 +137,7 @@ return [
     'search_product' => 'TÌm kiếm sản phẩm',
     'error_paypal' => ' Đã có lỗi xảy ra trong quá trình thực hiện , vui lòng thử lại',
 
-    'statistical' => 'Thống kê'
+    'statistical' => 'Thống kê',
+    'admin_page' => 'Trang quaản trị'
 
 ];

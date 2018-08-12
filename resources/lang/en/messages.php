@@ -135,6 +135,7 @@ return [
     'search' => 'search',
     'search_product' => 'search product',
     'error_paypal' => 'There was an error during the process, please try again',
-    'statistical' => 'statistical'
+    'statistical' => 'statistical',
+    'admin_page' => 'Admin page'
 
 ];
