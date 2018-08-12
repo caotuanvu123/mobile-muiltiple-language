@@ -104,7 +104,7 @@
                                     @auth
                                         <li>{{trans('messages.hello')}} : {{\Auth::user()->name}}</li>
                                         @if(\Laratrust::hasRole('admin'))
-                                        <li><a href="{{route('catrgory.index')}}">{{trans('messages.admin_page')}}</a> </li>
+                                        <li><a href="{{route('index')}}">{{trans('messages.admin_page')}}</a> </li>
                                         @endif
                                         <li> <a href="{{url('logout')}}"><i class="fa fa-sign-out"></i>{{trans('messages.logout_lable')}}</a> </li>
                                     @else
