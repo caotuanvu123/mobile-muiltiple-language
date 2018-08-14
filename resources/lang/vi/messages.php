@@ -25,7 +25,7 @@ return [
     'add_product_lable' => 'Thêm sản phẩm',
     'detail_lable' => 'Chi tiết',
     'edit_lable' => 'Chỉnh sửa',
-    'detail_product_lable' => 'Chi tiết dịch vụ',
+    'detail_product_lable' => 'Chi tiết sản phẩm',
     'name_product_lable' => 'Tên sản phẩm :',
     'price_product_lable' => 'Giá sản phẩm :',
     'desc_product_lable' => 'Mô tả sản phẩm :',

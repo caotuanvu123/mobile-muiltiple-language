@@ -9,7 +9,7 @@
             </div>
             <div class="col-md-7 modal_body_right">
                 <h4>{{$product->name}}</h4>
-                <p>{{$product->desc}}</p>
+                <p>{!! $product->desc!!}</p>
                 <div class="modal_body_right_cart simpleCart_shelfItem">
                     <p><i class="item_price">{{number_format($product->price, 0, ',', '.')}} {{trans('messages.money')}}</i></p>
                     <div>

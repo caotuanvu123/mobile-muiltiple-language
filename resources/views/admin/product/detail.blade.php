@@ -7,7 +7,7 @@
         <div class="modal-body">
             <p><strong>{{trans('messages.name_product_lable')}}</strong> {{$product->name}}</p>
             <p><strong>{{trans('messages.price_product_lable')}}</strong> {{$product->price}}</p>
-            <p><strong>{{trans('messages.desc_product_lable')}}</strong> {{$product->desc}}</p>
+            <p><strong>{{trans('messages.desc_product_lable')}}</strong> {!! $product->desc!!}</p>
             <div>
                 <p><strong>{{trans('messages.image_product')}}</strong></p>
                 <img src="{{route('product.image', $product->id)}}" alt="{{$product->name}}" style="max-width: 100%;">
