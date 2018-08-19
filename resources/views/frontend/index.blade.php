@@ -240,7 +240,7 @@
                                 $linkBrand = "storage/brand/".$product->image;
                             @endphp
                             <li>
-                                <img src="{{asset($linkBrand)}}" alt="{{$brand->name}}" class="img-responsive" />
+                                <img src="{{route('brand.image',$brand->id)}}" alt="{{$brand->name}}" class="img-responsive" />
                             </li>
                         @endforeach
                     </ul>
